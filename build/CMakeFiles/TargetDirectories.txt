@@ -1,0 +1,3 @@
+/home/devil/Desktop/customShell/build/CMakeFiles/run.dir
+/home/devil/Desktop/customShell/build/CMakeFiles/edit_cache.dir
+/home/devil/Desktop/customShell/build/CMakeFiles/rebuild_cache.dir
