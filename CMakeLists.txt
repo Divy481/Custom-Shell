@@ -7,4 +7,4 @@ project(
     
 )
 
-add_executable(run src/main.cpp src/cd.cpp)
+add_executable(run src/main.cpp src/cd.cpp src/history.cpp)

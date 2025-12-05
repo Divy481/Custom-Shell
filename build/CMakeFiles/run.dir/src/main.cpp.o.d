@@ -331,4 +331,5 @@ CMakeFiles/run.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/fs_ops.h /usr/include/c++/13/memory_resource \
  /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/bits/types/idtype_t.h \
- /home/devil/Desktop/customShell/src/cd.hpp
+ /home/devil/Desktop/customShell/src/cd.hpp \
+ /home/devil/Desktop/customShell/src/history.hpp

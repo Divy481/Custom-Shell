@@ -153,6 +153,30 @@ src/cd.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/cd.cpp.s
 .PHONY : src/cd.cpp.s
 
+src/history.o: src/history.cpp.o
+.PHONY : src/history.o
+
+# target to build an object file
+src/history.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/history.cpp.o
+.PHONY : src/history.cpp.o
+
+src/history.i: src/history.cpp.i
+.PHONY : src/history.i
+
+# target to preprocess a source file
+src/history.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/history.cpp.i
+.PHONY : src/history.cpp.i
+
+src/history.s: src/history.cpp.s
+.PHONY : src/history.s
+
+# target to generate assembly for a file
+src/history.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/history.cpp.s
+.PHONY : src/history.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... src/cd.o"
 	@echo "... src/cd.i"
 	@echo "... src/cd.s"
+	@echo "... src/history.o"
+	@echo "... src/history.i"
+	@echo "... src/history.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

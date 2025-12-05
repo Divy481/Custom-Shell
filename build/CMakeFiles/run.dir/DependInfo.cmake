@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/devil/Desktop/customShell/src/cd.cpp" "CMakeFiles/run.dir/src/cd.cpp.o" "gcc" "CMakeFiles/run.dir/src/cd.cpp.o.d"
+  "/home/devil/Desktop/customShell/src/history.cpp" "CMakeFiles/run.dir/src/history.cpp.o" "gcc" "CMakeFiles/run.dir/src/history.cpp.o.d"
   "/home/devil/Desktop/customShell/src/main.cpp" "CMakeFiles/run.dir/src/main.cpp.o" "gcc" "CMakeFiles/run.dir/src/main.cpp.o.d"
   )
 

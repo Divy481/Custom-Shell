@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "cd.hpp"
+#include "history.hpp"
 
 std::vector<std::string> tokenize(const std::string& input) {
     std::string token;
@@ -32,6 +33,8 @@ std::vector<std::string> tokenize(const std::string& input) {
 
 void shell_loop(char** env) {
     std::string input;
+    std::vector<std::string>history_list;
+    load_history(history_list);
 
     while (true) {
         char curr[PATH_MAX];
@@ -41,6 +44,10 @@ void shell_loop(char** env) {
         if (!std::getline(std::cin, input)) {
             std::cerr << "EXIT\n";
             break;
+        }
+        if(!input.empty()){
+            history_list.push_back(input);
+            save_history(history_list);
         }
 
         // Skip empty command
@@ -64,9 +71,20 @@ void shell_loop(char** env) {
             continue;
         }
 
+        if(strcmp(args[0],"pwd")==0){
+            char  pwd[PATH_MAX];
+            getcwd(pwd,sizeof(pwd));
+            std::cout<<pwd<<std::endl;
+            continue;
+        }
         if (strcmp(args[0], "exit") == 0) {
             std::cout << "Bye!\n";
             break;
+        }
+
+        if(strcmp(args[0],"history")==0){
+            history_command(history_list,args.data());
+            continue;
         }
 
         // External command →
