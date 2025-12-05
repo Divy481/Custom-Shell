@@ -7,4 +7,4 @@ project(
     
 )
 
-add_executable(run main.cpp input_parsing.cpp)
+add_executable(run src/main.cpp src/cd.cpp)

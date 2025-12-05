@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/devil/Desktop/customShell/input_parsing.cpp" "CMakeFiles/run.dir/input_parsing.cpp.o" "gcc" "CMakeFiles/run.dir/input_parsing.cpp.o.d"
-  "/home/devil/Desktop/customShell/main.cpp" "CMakeFiles/run.dir/main.cpp.o" "gcc" "CMakeFiles/run.dir/main.cpp.o.d"
+  "/home/devil/Desktop/customShell/src/cd.cpp" "CMakeFiles/run.dir/src/cd.cpp.o" "gcc" "CMakeFiles/run.dir/src/cd.cpp.o.d"
+  "/home/devil/Desktop/customShell/src/main.cpp" "CMakeFiles/run.dir/src/main.cpp.o" "gcc" "CMakeFiles/run.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

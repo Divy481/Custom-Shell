@@ -69,44 +69,44 @@ include CMakeFiles/run.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/run.dir/flags.make
 
-CMakeFiles/run.dir/main.cpp.o: CMakeFiles/run.dir/flags.make
-CMakeFiles/run.dir/main.cpp.o: /home/devil/Desktop/customShell/main.cpp
-CMakeFiles/run.dir/main.cpp.o: CMakeFiles/run.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/devil/Desktop/customShell/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/run.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/run.dir/main.cpp.o -MF CMakeFiles/run.dir/main.cpp.o.d -o CMakeFiles/run.dir/main.cpp.o -c /home/devil/Desktop/customShell/main.cpp
+CMakeFiles/run.dir/src/main.cpp.o: CMakeFiles/run.dir/flags.make
+CMakeFiles/run.dir/src/main.cpp.o: /home/devil/Desktop/customShell/src/main.cpp
+CMakeFiles/run.dir/src/main.cpp.o: CMakeFiles/run.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/devil/Desktop/customShell/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/run.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/run.dir/src/main.cpp.o -MF CMakeFiles/run.dir/src/main.cpp.o.d -o CMakeFiles/run.dir/src/main.cpp.o -c /home/devil/Desktop/customShell/src/main.cpp
 
-CMakeFiles/run.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/run.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/devil/Desktop/customShell/main.cpp > CMakeFiles/run.dir/main.cpp.i
+CMakeFiles/run.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/run.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/devil/Desktop/customShell/src/main.cpp > CMakeFiles/run.dir/src/main.cpp.i
 
-CMakeFiles/run.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/devil/Desktop/customShell/main.cpp -o CMakeFiles/run.dir/main.cpp.s
+CMakeFiles/run.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/devil/Desktop/customShell/src/main.cpp -o CMakeFiles/run.dir/src/main.cpp.s
 
-CMakeFiles/run.dir/input_parsing.cpp.o: CMakeFiles/run.dir/flags.make
-CMakeFiles/run.dir/input_parsing.cpp.o: /home/devil/Desktop/customShell/input_parsing.cpp
-CMakeFiles/run.dir/input_parsing.cpp.o: CMakeFiles/run.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/devil/Desktop/customShell/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/run.dir/input_parsing.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/run.dir/input_parsing.cpp.o -MF CMakeFiles/run.dir/input_parsing.cpp.o.d -o CMakeFiles/run.dir/input_parsing.cpp.o -c /home/devil/Desktop/customShell/input_parsing.cpp
+CMakeFiles/run.dir/src/cd.cpp.o: CMakeFiles/run.dir/flags.make
+CMakeFiles/run.dir/src/cd.cpp.o: /home/devil/Desktop/customShell/src/cd.cpp
+CMakeFiles/run.dir/src/cd.cpp.o: CMakeFiles/run.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/devil/Desktop/customShell/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/run.dir/src/cd.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/run.dir/src/cd.cpp.o -MF CMakeFiles/run.dir/src/cd.cpp.o.d -o CMakeFiles/run.dir/src/cd.cpp.o -c /home/devil/Desktop/customShell/src/cd.cpp
 
-CMakeFiles/run.dir/input_parsing.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/run.dir/input_parsing.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/devil/Desktop/customShell/input_parsing.cpp > CMakeFiles/run.dir/input_parsing.cpp.i
+CMakeFiles/run.dir/src/cd.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/run.dir/src/cd.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/devil/Desktop/customShell/src/cd.cpp > CMakeFiles/run.dir/src/cd.cpp.i
 
-CMakeFiles/run.dir/input_parsing.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/input_parsing.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/devil/Desktop/customShell/input_parsing.cpp -o CMakeFiles/run.dir/input_parsing.cpp.s
+CMakeFiles/run.dir/src/cd.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/src/cd.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/devil/Desktop/customShell/src/cd.cpp -o CMakeFiles/run.dir/src/cd.cpp.s
 
 # Object files for target run
 run_OBJECTS = \
-"CMakeFiles/run.dir/main.cpp.o" \
-"CMakeFiles/run.dir/input_parsing.cpp.o"
+"CMakeFiles/run.dir/src/main.cpp.o" \
+"CMakeFiles/run.dir/src/cd.cpp.o"
 
 # External object files for target run
 run_EXTERNAL_OBJECTS =
 
-run: CMakeFiles/run.dir/main.cpp.o
-run: CMakeFiles/run.dir/input_parsing.cpp.o
+run: CMakeFiles/run.dir/src/main.cpp.o
+run: CMakeFiles/run.dir/src/cd.cpp.o
 run: CMakeFiles/run.dir/build.make
 run: CMakeFiles/run.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/devil/Desktop/customShell/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable run"
