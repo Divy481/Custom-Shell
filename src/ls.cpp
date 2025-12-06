@@ -2,6 +2,7 @@
 #include <iostream>
 #include <dirent.h>
 #include <cstring>
+#include <iomanip>
 #include<sys/stat.h>
 #include <unistd.h>
 
@@ -22,13 +23,13 @@ void print_color(const char* path,const char* name){
     }
 
     if(S_ISDIR(st.st_mode)){
-        std::cout<<BLUE<<name<<RESET<<" ";
+        std::cout<<BLUE<<name<<RESET<<std::setw(10)<<" ";
     }else if(S_ISLNK(st.st_mode)){
-        std::cout<<CYAN<<name<<RESET<<" ";
+        std::cout<<CYAN<<name<<RESET<<std::setw(10)<<" ";
     }else if(st.st_mode & S_IXUSR){
-        std::cout<<GREEN<<name<<RESET<<" ";
+        std::cout<<GREEN<<name<<RESET<<std::setw(10)<<" ";
     }else{
-        std::cout<<name<<" ";
+        std::cout<<name<<std::setw(10)<<" ";
     }
 }
 int ls_command(char** args){

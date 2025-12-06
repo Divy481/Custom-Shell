@@ -12,6 +12,7 @@
 #define RESET   "\033[0m"
 #define GREEN    "\033[32m"
 #define RED          "\033[31m"
+#define CYAN         "\033[36m"
 
 
 void start_gui(){
@@ -67,11 +68,12 @@ void shell_loop(char** env) {
         char curr[PATH_MAX];
         getcwd(curr,sizeof(curr));
         std::cout<<GREEN  <<"mintOS[SHELL]> "<<RESET<<BLUE<<"["<<curr<<"] ~ "<<RESET;
-        
+        std::cout<<CYAN;
         if (!std::getline(std::cin, input)) {
             std::cerr << "EXIT\n";
             break;
         }
+        std::cout<<RESET;
         if(!input.empty()){
             auto now = std::chrono::system_clock::now();
             std::time_t current = std::chrono::system_clock::to_time_t(now);

@@ -5,6 +5,11 @@
 #include<cstring>
 #include<ctime>
 
+#define BLUE    "\033[34m" 
+#define RESET   "\033[0m"
+#define GREEN    "\033[32m"
+#define RED          "\033[31m"
+
 void save_history(const std::string& cmd, std::time_t t) {
 
     std::string historyPath = std::string(getenv("HOME")) + "/.mintHistory";
@@ -59,9 +64,9 @@ void history_command() {
         std::strftime(buf, sizeof(buf), "%b %d %H:%M:%S %Y",
                       std::localtime(&t));
 
-        std::cout << index++ 
-                  << "  " << buf 
-                  << "   " << cmd << "\n";
+        std::cout <<RED <<index++ 
+                  <<RESET<< "  " <<BLUE<< buf<<RESET 
+                  << "   " << GREEN<<cmd <<RESET<< "\n";
     }
 }
 
