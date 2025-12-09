@@ -58,6 +58,12 @@ void shell_loop(char** env) {
         if (input.empty())
             continue;
 
+        std::vector<std::string> pipeline_commands;
+        if (parse_pipeline(input, pipeline_commands)) {
+            execute_pipeline(pipeline_commands);
+            continue;  // VERY IMPORTANT
+        }
+
         // Tokenize
         std::vector<std::string> tokens = tokenize(input);
         if (tokens.empty())
@@ -75,14 +81,7 @@ void shell_loop(char** env) {
             continue;
         }
 
-        std::vector<char*> left_cmd;
-        std::vector<char*> right_cmd;
-
-        if(praser_pipe(input,left_cmd,right_cmd)){
-            pipe_command(left_cmd.data(),right_cmd.data());
-            continue;
-        }
-
+    
         if(strcmp(args[0],"pwd")==0){
             char  pwd[PATH_MAX];
             getcwd(pwd,sizeof(pwd));

@@ -4,62 +4,98 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <string>
+#include<cstring>
 #include <vector>
 #include "tokenize.hpp"
+#include<array>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <iostream>
 
+std::vector<std::string> tokenize(const std::string& cmd);
 
-void pipe_command(char** left_cmd,char** right__cmd){
-    int fd[2];
-    if(pipe(fd)==-1){
-        perror("pipe");
-        return;
+bool parse_pipeline(std::string& input, std::vector<std::string>& commands) {
+    size_t start = 0, pos;
+
+    while ((pos = input.find('|', start)) != std::string::npos) {
+        std::string part = input.substr(start, pos - start);
+        if (!part.empty()) commands.push_back(part);
+        start = pos + 1;
     }
 
-    pid_t pid1 = fork();
-    if(pid1 ==0){
-        //Left Command Processed
-        dup2(fd[1],STDOUT_FILENO);
-        close(fd[0]);
-        close(fd[1]);
-        execvp(left_cmd[0],left_cmd);
-        perror("Left COmmand Error");
-        exit(1);
-    }
+    std::string last = input.substr(start);
+    if (!last.empty()) commands.push_back(last);
 
-    pid_t pid2 = fork();
-    if(pid2 == 0){
-        dup2(fd[0],STDIN_FILENO);
-        close(fd[1]);
-        close(fd[0]);
-        execvp(right__cmd[0],right__cmd);
-        perror("Right command Error");
-        exit(1);
-    }
-
-    close(fd[0]);
-    close(fd[1]);
-    waitpid(pid1,NULL,0);
-    waitpid(pid2,NULL,0);
+    return commands.size() > 1;
 }
 
-bool praser_pipe(std::string &input,std::vector<char*>&left_cmd,
-                 std::vector<char*>&right_cmd){
-        
-    std::size_t pos = input.find('|');
+std::vector<char*> to_char(const std::string& cmd) {
+    std::vector<char*> args;
+    std::vector<std::string> tokens = tokenize(cmd);
 
-    if(pos == std::string::npos){
-        return false;
+    for (auto& t : tokens) {
+        char* c = strdup(t.c_str());    // OK because child execvp replaces process
+        args.push_back(c);
     }
 
-    std::string left = input.substr(0,pos);
-    std::string right = input.substr(pos+1);
-    std::vector<std::string> t1 = tokenize(left);
-    for(auto& s:t1)left_cmd.push_back(const_cast<char*>(s.c_str()));
-    left_cmd.push_back(nullptr);
-    
-    std::vector<std::string> t2 = tokenize(right);
-    for(auto& s:t2)right_cmd.push_back(const_cast<char*>(s.c_str()));
-    right_cmd.push_back(nullptr);
+    args.push_back(nullptr);
+    return args;
+}
 
-    return true;
+void execute_pipeline(const std::vector<std::string>& commands) {
+
+    int n = commands.size();
+    std::vector<std::array<int,2>> pipeFd(n - 1);
+
+    // Create N-1 pipes
+    for (int i = 0; i < n - 1; i++) {
+        if (pipe(pipeFd[i].data()) == -1) {
+            perror("pipe");
+            exit(1);
+        }
+    }
+
+    // Fork N processes
+    for (int i = 0; i < n; i++) {
+        pid_t pid = fork();
+        if (pid == 0) {
+
+            // If not first command → read from previous pipe
+            if (i > 0) {
+                dup2(pipeFd[i - 1][0], STDIN_FILENO);
+            }
+
+            // If not last command → write to next pipe
+            if (i < n - 1) {
+                dup2(pipeFd[i][1], STDOUT_FILENO);
+            }
+
+            // Close all pipes in the child
+            for (int j = 0; j < n - 1; j++) {
+                close(pipeFd[j][0]);
+                close(pipeFd[j][1]);
+            }
+
+            // Run command
+            std::vector<char*> argv = to_char(commands[i]);
+            execvp(argv[0], argv.data());
+
+            perror("execvp");
+            exit(1);
+        }
+    }
+
+    // Parent closes all pipe ends
+    for (int i = 0; i < n - 1; i++) {
+        close(pipeFd[i][0]);
+        close(pipeFd[i][1]);
+    }
+
+    // Parent waits for all children
+    for (int i = 0; i < n; i++) {
+        wait(NULL);
+    }
 }
