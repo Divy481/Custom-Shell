@@ -335,4 +335,5 @@ CMakeFiles/run.dir/src/main.cpp.o: \
  /home/devil/Desktop/customShell/src/history.hpp \
  /home/devil/Desktop/customShell/src/ls.hpp \
  /home/devil/Desktop/customShell/src/tokenize.hpp \
- /home/devil/Desktop/customShell/src/pipe.hpp
+ /home/devil/Desktop/customShell/src/pipe.hpp \
+ /home/devil/Desktop/customShell/src/redirection.hpp

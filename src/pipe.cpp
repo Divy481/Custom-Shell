@@ -14,6 +14,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include"redirection.hpp"
 
 std::vector<std::string> tokenize(const std::string& cmd);
 
@@ -80,9 +81,17 @@ void execute_pipeline(const std::vector<std::string>& commands) {
             }
 
             // Run command
-            std::vector<char*> argv = to_char(commands[i]);
-            execvp(argv[0], argv.data());
+             std::vector<std::string> tokens = tokenize(commands[i]);
+            Redirection rd = parse_redirection(tokens);
+            apply_redirection(rd);      // does dup2()
 
+            // Convert cleaned tokens → execvp argv
+            std::vector<char*> argv;
+            for (auto& t : tokens)
+                argv.push_back(strdup(t.c_str()));
+            argv.push_back(nullptr);
+
+            execvp(argv[0], argv.data());
             perror("execvp");
             exit(1);
         }

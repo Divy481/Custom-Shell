@@ -249,6 +249,30 @@ src/pipe.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/pipe.cpp.s
 .PHONY : src/pipe.cpp.s
 
+src/redirection.o: src/redirection.cpp.o
+.PHONY : src/redirection.o
+
+# target to build an object file
+src/redirection.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/redirection.cpp.o
+.PHONY : src/redirection.cpp.o
+
+src/redirection.i: src/redirection.cpp.i
+.PHONY : src/redirection.i
+
+# target to preprocess a source file
+src/redirection.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/redirection.cpp.i
+.PHONY : src/redirection.cpp.i
+
+src/redirection.s: src/redirection.cpp.s
+.PHONY : src/redirection.s
+
+# target to generate assembly for a file
+src/redirection.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/redirection.cpp.s
+.PHONY : src/redirection.cpp.s
+
 src/tokenize.o: src/tokenize.cpp.o
 .PHONY : src/tokenize.o
 
@@ -297,6 +321,9 @@ help:
 	@echo "... src/pipe.o"
 	@echo "... src/pipe.i"
 	@echo "... src/pipe.s"
+	@echo "... src/redirection.o"
+	@echo "... src/redirection.i"
+	@echo "... src/redirection.s"
 	@echo "... src/tokenize.o"
 	@echo "... src/tokenize.i"
 	@echo "... src/tokenize.s"

@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/devil/Desktop/customShell/src/ls.cpp" "CMakeFiles/run.dir/src/ls.cpp.o" "gcc" "CMakeFiles/run.dir/src/ls.cpp.o.d"
   "/home/devil/Desktop/customShell/src/main.cpp" "CMakeFiles/run.dir/src/main.cpp.o" "gcc" "CMakeFiles/run.dir/src/main.cpp.o.d"
   "/home/devil/Desktop/customShell/src/pipe.cpp" "CMakeFiles/run.dir/src/pipe.cpp.o" "gcc" "CMakeFiles/run.dir/src/pipe.cpp.o.d"
+  "/home/devil/Desktop/customShell/src/redirection.cpp" "CMakeFiles/run.dir/src/redirection.cpp.o" "gcc" "CMakeFiles/run.dir/src/redirection.cpp.o.d"
   "/home/devil/Desktop/customShell/src/tokenize.cpp" "CMakeFiles/run.dir/src/tokenize.cpp.o" "gcc" "CMakeFiles/run.dir/src/tokenize.cpp.o.d"
   )
 

@@ -7,6 +7,7 @@
 #include"ls.hpp"
 #include "tokenize.hpp"
 #include "pipe.hpp"
+#include "redirection.hpp"
 #include<chrono>
 #include<ctime>
 
@@ -58,11 +59,13 @@ void shell_loop(char** env) {
         if (input.empty())
             continue;
 
+        //PIPELINE EXCUTE 
         std::vector<std::string> pipeline_commands;
         if (parse_pipeline(input, pipeline_commands)) {
             execute_pipeline(pipeline_commands);
             continue;  // VERY IMPORTANT
         }
+        //PIPELINE END
 
         // Tokenize
         std::vector<std::string> tokens = tokenize(input);
@@ -102,6 +105,37 @@ void shell_loop(char** env) {
         }
         // External command →
         
+        if(input.find('>') != std::string::npos 
+           || input.find('<')!=std::string::npos){
+        //Redirection Excute 
+
+            pid_t pid = fork();
+
+            if(pid == 0){
+                // Re-tokenize because pipeline consumed original input
+                std::vector<std::string> rTokens = tokenize(input);
+                
+                //Parse < >> >
+                Redirection rd = parse_redirection(rTokens);
+
+                //Apply dup2 
+                apply_redirection(rd);
+
+                std::vector<char*> argv;
+
+                for(auto& t:rTokens){
+                    argv.push_back(strdup(t.c_str()));
+                }
+                argv.push_back(nullptr);
+                execvp(argv[0],argv.data());
+                perror("execvp");
+                exit(1);
+
+            }else{
+                waitpid(pid,nullptr,0);
+            }
+        }
+        //Redirection End
     }
 }
 
