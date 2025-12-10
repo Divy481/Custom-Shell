@@ -967,6 +967,7 @@ CMakeFiles/run.dir/src/main.cpp.o
 CMakeFiles/run.dir/src/pipe.cpp.o
  /home/devil/Desktop/customShell/src/pipe.cpp
  /home/devil/Desktop/customShell/src/pipe.hpp
+ /home/devil/Desktop/customShell/src/redirection.hpp
  /home/devil/Desktop/customShell/src/tokenize.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h

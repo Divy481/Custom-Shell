@@ -8,6 +8,7 @@
 #include "tokenize.hpp"
 #include "pipe.hpp"
 #include "redirection.hpp"
+#include "cat.hpp"
 #include<chrono>
 #include<ctime>
 
@@ -102,6 +103,12 @@ void shell_loop(char** env) {
         }
         if(strcmp(args[0],"ls")==0){
             ls_command(args.data());
+            continue;
+        }
+
+        if(strcmp(args[0],"cat")==0){
+            cat_command(args.data());
+            continue;
         }
         // External command →
         

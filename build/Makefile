@@ -129,6 +129,30 @@ run/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/build
 .PHONY : run/fast
 
+src/cat.o: src/cat.cpp.o
+.PHONY : src/cat.o
+
+# target to build an object file
+src/cat.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/cat.cpp.o
+.PHONY : src/cat.cpp.o
+
+src/cat.i: src/cat.cpp.i
+.PHONY : src/cat.i
+
+# target to preprocess a source file
+src/cat.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/cat.cpp.i
+.PHONY : src/cat.cpp.i
+
+src/cat.s: src/cat.cpp.s
+.PHONY : src/cat.s
+
+# target to generate assembly for a file
+src/cat.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/src/cat.cpp.s
+.PHONY : src/cat.cpp.s
+
 src/cd.o: src/cd.cpp.o
 .PHONY : src/cd.o
 
@@ -306,6 +330,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... run"
+	@echo "... src/cat.o"
+	@echo "... src/cat.i"
+	@echo "... src/cat.s"
 	@echo "... src/cd.o"
 	@echo "... src/cd.i"
 	@echo "... src/cd.s"
