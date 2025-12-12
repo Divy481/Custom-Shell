@@ -25,7 +25,7 @@ void start_gui(){
     std::cout<<RED<<"|"<<std::setw(52)<<"|"<<"\n";
     std::cout<<RED<<"|"<<std::setw(52)<<"|"<<"\n";
     std::cout<<RED<<"|"<<std::setw(25)<<"MINTOS"<<std::setw(27)<<"|"<<"\n";
-    std::cout<<RED<<"|"<<std::setw(30)<<"BY:- JACK DUNIYA KA PAPA"<<std::setw(22)<<"|"<<"\n";
+    std::cout<<RED<<"|"<<std::setw(52)<<"|"<<"\n";
     std::cout<<RED<<"|"<<std::setw(52)<<"|"<<"\n";
     
     std::cout<<RED<<"----------------------------------------------------"<<RESET<<"\n";
