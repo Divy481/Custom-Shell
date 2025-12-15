@@ -1,87 +1,124 @@
-# MinitosShell
+# 🐚 MinitosShell (MintOS)
 
-A custom, lightweight Linux shell implemented in C++. MinitosShell (or MintOS Shell) provides a robust command-line interface with support for process management, piping, redirection, and custom implementations of common core utilities.
+![Status](https://img.shields.io/badge/status-active-success.svg)
+![Language](https://img.shields.io/badge/language-C++17-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## Features
+> **A robust, lightweight, and custom Linux shell built from scratch in C++.**
 
-### 🚀 Core Functionality
-- **Command Execution**: Execute standard external Linux commands.
-- **Pipelines (`|`)**: Chain multiple commands together using pipes (e.g., `ls | grep cpp`).
+MinitosShell (or **MintOS**) is not just another wrapper around `system()`. It is a fully functional shell implementation that manually parses commands, manages processes, handles signals, and manipulates file descriptors for redirection and piping. Designed for educational purposes and lightweight usage.
+
+---
+
+## ⚡ Key Features
+
+### 🖥️ Built-in Commands
+Unlike standard shells that rely entirely on external binaries, MintOS includes custom implementations for speed and control:
+- **`cd`**: Advanced directory navigation.
+  - `cd ~`: Go to home directory.
+  - `cd -`: Go to previous directory.
+  - `cd -P <path>`: Resolve symlinks physically before changing directories.
+  - Supports environment variable expansion (e.g., `cd $HOME`).
+- **`ls`**: Colored output listing.
+  - Handles directories (BLUE), executables (GREEN), and symlinks (CYAN).
+  - Supports `-a` for hidden files.
+- **`cat`**: file concatenator.
+- **`exit`**: Graceful shutdown.
+
+### 🔧 Core Shell Mechanics
+- **Tokenization**: Smart parsing respecting double quotes (`"My Folder/file.txt"`).
+- **Pipelines (`|`)**: Seamlessly chain commands.
+  - Example: `ls -a | grep ".cpp" | wc -l`
 - **I/O Redirection**:
-  - Input Redirection (`<`)
-  - Output Redirection (`>`) for overwriting.
-  - Append Redirection (`>>`) for appending to files.
-- **Background Processes**: Run commands in the background using `&` (e.g., `sleep 10 &`).
+  - `>` : Overwrite output to file.
+  - `>>`: Append output to file.
+  - `<` : Read input from file.
+- **Job Control**:
+  - Run background jobs with `&`.
+  - Detailed job listing with `jobs`.
+  - Foreground control with `fg <id>`.
+  - Background resumption with `bg <id>`.
+  - Full signal handling (`SIGINT`, `SIGTSTP`, `SIGCHLD`) to prevent zombie processes.
 
-### 🛠 Built-in Commands
-MinitosShell includes valid implementations of several standard commands directly within the shell:
-- **`cd <directory>`**: Change the current working directory.
-- **`ls [-a] [directory]`**: Custom implementation of `ls`. Supports colored output for directories, executables, and symlinks. Use `-a` to show hidden files.
-- **`cat [files...]`**: Concatenate and display file content.
-- **`exit`**: Terminate the shell session.
+---
 
-### ⚙️ Job Control
-Manage active processes directly from the shell:
-- **`jobs`**: List all current background and stopped jobs with their IDs and status.
-- **`fg <job_id>`**: Bring a background/stopped job to the foreground.
-- **`bg <job_id>`**: Resume a stopped job in the background.
-- **Signal Handling**: Appropriately handles `SIGINT` (Ctrl+C) and `SIGTSTP` (Ctrl+Z) for child processes without crashing the shell itself.
+## 🏗 Architecture
 
-## Getting Started
+The shell operates on a continuous REPL (Read-Eval-Print Loop) cycle:
+
+1.  **Initialize**: Sets up signal handlers (ignoring generic `SIGINT`/`SIGTSTP` for the shell itself) and initializes the job table.
+2.  **Prompt**: Displays a colored prompt `mintOS[SHELL]> [cwd] ~`.
+3.  **Tokenize**: Splits input strings while respecting quoted arguments.
+4.  **Parse**: Detects piping `|`, redirection `< >`, or background flags `&`.
+5.  **Execute**:
+    - **Built-ins**: Executed directly in the parent process (essential for `cd`).
+    - **External**: Forked via `execvp`.
+    - **Pipes**: Constructed using `pipe()` and `dup2()` with recursive forking.
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Linux Environment
-- CMake (3.28 or higher)
-- C++ Compiler (GCC/Clang) with C++17 support recommended.
+- Linux / macOS (Unix-like environment)
+- C++ Compiler (g++ / clang++)
+- CMake
 
-### Building
-1. Clone the repository:
-   ```bash
-   git clone <repository_url>
-   cd customShell
-   ```
-
-2. Create a build directory and compile:
-   ```bash
-   mkdir build
-   cd build
-   cmake ..
-   make
-   ```
-
-### Running
-After compiling, start the shell using:
+### Installation
 ```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/MinitosShell.git
+cd MinitosShell
+
+# 2. Build using CMake
+mkdir build && cd build
+cmake ..
+make
+
+# 3. Run
 ./run
 ```
 
-## Usage Examples
+---
 
-**Navigation & Listing:**
+## 📚 Usage Examples
+
+### Navigation & File Management
 ```bash
-mintOS[SHELL]> [ /home/user ] ~ ls -a
-mintOS[SHELL]> [ /home/user ] ~ cd src
+mintOS[SHELL]> [ /home ] ~ cd Desktop
+mintOS[SHELL]> [ /home/Desktop ] ~ ls -a
+.  ..  customShell  resume.pdf
 ```
 
-**Piping & Redirection:**
+### Advanced Piping
 ```bash
-mintOS[SHELL]> [ /home/user/src ] ~ ls | grep .cpp > source_files.txt
-mintOS[SHELL]> [ /home/user/src ] ~ cat source_files.txt
+mintOS[SHELL]> [ /src ] ~ cat main.cpp | grep "include" > headers.txt
+mintOS[SHELL]> [ /src ] ~ cat headers.txt
+#include <iostream>
+#include <vector>
 ```
 
-**Job Control:**
+### Job Management
 ```bash
-mintOS[SHELL]> [ /home/user ] ~ sleep 50 &
-[1] 12345
-mintOS[SHELL]> [ /home/user ] ~ jobs
-[1] Running  sleep 50
-mintOS[SHELL]> [ /home/user ] ~ fg 1
+mintOS[SHELL]> [ / ] ~ sleep 100 &
+[1] 14520
+mintOS[SHELL]> [ / ] ~ jobs
+[1] Running   sleep 100
+mintOS[SHELL]> [ / ] ~ fg 1
+# (Process brought to foreground)
 ```
 
-## Project Structure
-- **`src/main.cpp`**: Main shell loop and command parsing logic.
-- **`src/job_control.cpp`**: Implementation of job management (signals, reaping, fg/bg).
-- **`src/ls.cpp`**: Custom implementation of the `ls` command.
-- **`src/cat.cpp`**: Custom implementation of the `cat` command.
-- **`src/pipe.cpp`**: Logic for handling piped commands.
-- **`src/redirection.cpp`**: Logic for file descriptor manipulation for redirects.
+---
+
+## 🔮 Future Roadmap
+- [ ] Tab Autocompletion
+- [ ] Command History (Up/Down arrow navigation)
+- [ ] Environment Variable (`export`) support
+- [ ] `.mintrc` configuration file support
+
+---
+
+## 🤝 Contributing
+Contributions are welcome! Please fork the repository and submit a pull request.
+
+**Authors**: Devil & Team
