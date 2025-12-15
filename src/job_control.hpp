@@ -1,40 +1,62 @@
-#pragma once 
-#include<string>
-#include<vector>
-#include<sys/types.h>
-#include<ctime>
+#pragma once
 
-enum JobState{RUNNING,STOPPED,DONE};
+#include <string>
+#include <vector>
+#include <sys/types.h>
+#include <ctime>
 
-struct Job{
-    int id;               //JOB id
-    pid_t pgid;           //process group id
-    std::string cmd;      //command
-    JobState state;       //RUNNING
-    std::time_t startTime;//start time 
+/* ---------------- Job State ---------------- */
+
+enum JobState {
+    RUNNING,
+    STOPPED,
+    DONE
 };
 
-void init_shell();  //call at startup to initailze signal handling, signit
+/* ---------------- Job Structure ---------------- */
 
-// Launch a job given tokenized command (tokens vector) and whether background
-// returns job id (>=1) for background jobs, or 0 for foreground jobs (already waited)
+struct Job {
+    int id;                 // [1], [2], ...
+    pid_t pgid;             // process group id
+    std::string cmd;        // full command
+    JobState state;
+    std::time_t startTime;
+};
 
-int launch_jobs(const std::vector<std::string>& tokens,bool background,char ** env = nullptr);
+/* ---------------- Initialization ---------------- */
 
+// Call once at shell startup
+void init_shell();
 
-//Job table helper
+/* ---------------- Job Launching ---------------- */
 
-void list_job();
-void mark_job_status(pid_t pid,int status);
+// Launch a job
+// background = true  → cmd &
+// background = false → foreground
+//
+// return:
+//   0   → foreground job
+//  >0   → background job id
+//  -1   → error
+int launch_job(const std::vector<std::string>& tokens,
+               bool background,
+               char** envp = nullptr);
+
+/* ---------------- Job Table ---------------- */
+
+void list_jobs();
 void reap_done_jobs();
 
-// Foreground / Background control
+/* ---------------- SIGCHLD Processing ---------------- */
 
-int put_job_in_foreground(int JobId,bool cont);
-int put_job_in_background(int JobId,bool cont);
+// MUST be called from main loop (never from signal handler)
+void process_sigchld_events();
 
-// Utility to find job by id
+/* ---------------- Foreground / Background ---------------- */
+
+int put_job_in_foreground(int jobId, bool cont);
+int put_job_in_background(int jobId, bool cont);
+
+/* ---------------- Utilities ---------------- */
+
 int job_id_from_pgid(pid_t pgid);
-
-
-

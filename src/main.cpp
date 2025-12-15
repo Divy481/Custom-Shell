@@ -1,16 +1,22 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <climits>
+#include <cstring>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <chrono>
+#include <ctime>
 
 #include "cd.hpp"
 #include "history.hpp"
-#include"ls.hpp"
+#include "ls.hpp"
 #include "tokenize.hpp"
 #include "pipe.hpp"
 #include "redirection.hpp"
 #include "cat.hpp"
-#include<chrono>
-#include<ctime>
+#include "job_control.hpp"
 
 #define BLUE    "\033[34m" 
 #define RESET   "\033[0m"
@@ -34,122 +40,115 @@ void start_gui(){
 
 void shell_loop(char** env) {
     std::string input;
-    std::vector<std::string>history_list;
-    std::vector<std::time_t>timeHistory;
-
-    load_history(history_list,timeHistory);
 
     while (true) {
+        process_sigchld_events();
+        reap_done_jobs();
+
         char curr[PATH_MAX];
-        getcwd(curr,sizeof(curr));
-        std::cout<<GREEN  <<"mintOS[SHELL]> "<<RESET<<BLUE<<"["<<curr<<"] ~ "<<RESET;
-        std::cout<<CYAN;
-        if (!std::getline(std::cin, input)) {
-            std::cerr << "EXIT\n";
-            break;
-        }
-        std::cout<<RESET;
-        if(!input.empty()){
-            auto now = std::chrono::system_clock::now();
-            std::time_t current = std::chrono::system_clock::to_time_t(now);
+        getcwd(curr, sizeof(curr));
+        std::cout << GREEN << "mintOS[SHELL]> "
+                  << RESET << BLUE << "[" << curr << "] ~ "
+                  << RESET;
 
-            save_history(input, current);
-        }
+        if (!std::getline(std::cin, input)) break;
+        if (input.empty()) continue;
 
-        // Skip empty command
-        if (input.empty())
+        /* ---------------- PIPELINE ---------------- */
+        std::vector<std::string> pipeline_cmds;
+        if (parse_pipeline(input, pipeline_cmds)) {
+            execute_pipeline(pipeline_cmds);
             continue;
-
-        //PIPELINE EXCUTE 
-        std::vector<std::string> pipeline_commands;
-        if (parse_pipeline(input, pipeline_commands)) {
-            execute_pipeline(pipeline_commands);
-            continue;  // VERY IMPORTANT
         }
-        //PIPELINE END
 
-        // Tokenize
+        /* ---------------- TOKENIZE ---------------- */
         std::vector<std::string> tokens = tokenize(input);
-        if (tokens.empty())
-            continue;
+        if (tokens.empty()) continue;
 
-        // Convert vector<string> → vector<char*>
-        std::vector<char*> args;
-        for (auto& t : tokens)
-            args.push_back(const_cast<char*>(t.c_str()));
-        args.push_back(nullptr);
+        /* ---------------- BACKGROUND ---------------- */
+        bool background = false;
+        if (tokens.back() == "&") {
+            background = true;
+            tokens.pop_back();
+        }
 
-        // Built-in commands
-        if (strcmp(args[0], "cd") == 0) {
+        /* ---------------- BUILTINS ---------------- */
+        if (tokens[0] == "exit") break;
+
+        if (tokens[0] == "cd") {
+            std::vector<char*> args;
+            for (auto& s : tokens) args.push_back((char*)s.c_str());
+            args.push_back(nullptr);
             cd_command(args.data());
             continue;
         }
 
-    
-        if(strcmp(args[0],"pwd")==0){
-            char  pwd[PATH_MAX];
-            getcwd(pwd,sizeof(pwd));
-            std::cout<<pwd<<std::endl;
+        if (tokens[0] == "jobs") {
+            list_jobs();
             continue;
-        }
-        if (strcmp(args[0], "exit") == 0) {
-            std::cout << "Bye!\n";
-            break;
         }
 
-        if(strcmp(args[0],"history")==0){
-            history_command();
+        if (tokens[0] == "fg") {
+            put_job_in_foreground(std::stoi(tokens[1]), true);
             continue;
         }
-        if(strcmp(args[0],"ls")==0){
+
+        if (tokens[0] == "bg") {
+            put_job_in_background(std::stoi(tokens[1]), true);
+            continue;
+        }
+
+        if (tokens[0] == "ls") {
+            std::vector<char*> args;
+            for (auto& s : tokens) args.push_back((char*)s.c_str());
+            args.push_back(nullptr);
             ls_command(args.data());
             continue;
         }
 
-        if(strcmp(args[0],"cat")==0){
+        if (tokens[0] == "cat") {
+            std::vector<char*> args;
+            for (auto& s : tokens) args.push_back((char*)s.c_str());
+            args.push_back(nullptr);
             cat_command(args.data());
             continue;
         }
-        // External command →
-        
-        if(input.find('>') != std::string::npos 
-           || input.find('<')!=std::string::npos){
-        //Redirection Excute 
+
+        /* ---------------- REDIRECTION ---------------- */
+        if (input.find('<') != std::string::npos ||
+            input.find('>') != std::string::npos) {
 
             pid_t pid = fork();
-
-            if(pid == 0){
-                // Re-tokenize because pipeline consumed original input
-                std::vector<std::string> rTokens = tokenize(input);
-                
-                //Parse < >> >
-                Redirection rd = parse_redirection(rTokens);
-
-                //Apply dup2 
+            if (pid == 0) {
+                auto rtokens = tokenize(input);
+                Redirection rd = parse_redirection(rtokens);
                 apply_redirection(rd);
 
                 std::vector<char*> argv;
-
-                for(auto& t:rTokens){
-                    argv.push_back(strdup(t.c_str()));
-                }
+                for (auto& s : rtokens)
+                    argv.push_back(strdup(s.c_str()));
                 argv.push_back(nullptr);
-                execvp(argv[0],argv.data());
-                perror("execvp");
-                exit(1);
 
-            }else{
-                waitpid(pid,nullptr,0);
+                execvp(argv[0], argv.data());
+                perror("exec");
+                _exit(1);
             }
+            waitpid(pid, nullptr, 0);
+            continue;
         }
-        //Redirection End
+
+        /* ---------------- EXTERNAL COMMAND ---------------- */
+        launch_job(tokens, background, env);
     }
 }
+
 
 int main(int argc, char** argv, char** env) {
     (void)argc;
     (void)argv;
+    init_shell();
     start_gui();
+    
     shell_loop(env);
     return 0;
 }

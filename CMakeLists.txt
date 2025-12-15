@@ -7,4 +7,4 @@ project(
     
 )
 
-add_executable(run src/main.cpp src/cd.cpp src/history.cpp src/ls.cpp src/pipe.cpp src/tokenize.cpp src/redirection.cpp src/cat.cpp) 
+add_executable(run src/main.cpp src/cd.cpp src/history.cpp src/ls.cpp src/pipe.cpp src/tokenize.cpp src/redirection.cpp src/job_control.cpp src/cat.cpp) 

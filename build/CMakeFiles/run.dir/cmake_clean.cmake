@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/run.dir/src/cd.cpp.o.d"
   "CMakeFiles/run.dir/src/history.cpp.o"
   "CMakeFiles/run.dir/src/history.cpp.o.d"
+  "CMakeFiles/run.dir/src/job_control.cpp.o"
+  "CMakeFiles/run.dir/src/job_control.cpp.o.d"
   "CMakeFiles/run.dir/src/ls.cpp.o"
   "CMakeFiles/run.dir/src/ls.cpp.o.d"
   "CMakeFiles/run.dir/src/main.cpp.o"

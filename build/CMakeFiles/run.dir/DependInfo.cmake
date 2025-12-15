@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/devil/Desktop/customShell/src/cat.cpp" "CMakeFiles/run.dir/src/cat.cpp.o" "gcc" "CMakeFiles/run.dir/src/cat.cpp.o.d"
   "/home/devil/Desktop/customShell/src/cd.cpp" "CMakeFiles/run.dir/src/cd.cpp.o" "gcc" "CMakeFiles/run.dir/src/cd.cpp.o.d"
   "/home/devil/Desktop/customShell/src/history.cpp" "CMakeFiles/run.dir/src/history.cpp.o" "gcc" "CMakeFiles/run.dir/src/history.cpp.o.d"
+  "/home/devil/Desktop/customShell/src/job_control.cpp" "CMakeFiles/run.dir/src/job_control.cpp.o" "gcc" "CMakeFiles/run.dir/src/job_control.cpp.o.d"
   "/home/devil/Desktop/customShell/src/ls.cpp" "CMakeFiles/run.dir/src/ls.cpp.o" "gcc" "CMakeFiles/run.dir/src/ls.cpp.o.d"
   "/home/devil/Desktop/customShell/src/main.cpp" "CMakeFiles/run.dir/src/main.cpp.o" "gcc" "CMakeFiles/run.dir/src/main.cpp.o.d"
   "/home/devil/Desktop/customShell/src/pipe.cpp" "CMakeFiles/run.dir/src/pipe.cpp.o" "gcc" "CMakeFiles/run.dir/src/pipe.cpp.o.d"
